@@ -3,7 +3,10 @@ import { getLocaleFromPathname, toLocalePath } from '../lib/i18n';
 
 const { title = 'Rage of Mages', lang: langProp } = Astro.props;
 const lang = (langProp ?? getLocaleFromPathname(Astro.url.pathname) ?? 'en');
-const homeHref = `/${lang}/`;
+// IMPORTANT: Use relative URLs so this works both locally (/) and on GitHub Pages project sites (/pages/)
+const homeHref = lang === 'ru' ? '../ru/' : '../en/';
+const enHref = '../en/';
+const ruHref = '../ru/';
 ---
 <!doctype html>
 <html lang={lang}>
@@ -126,13 +129,13 @@ const homeHref = `/${lang}/`;
           <a href={homeHref}>{lang === 'ru' ? 'Главная' : 'Home'}</a>
           <span class="lang-switch" role="group" aria-label="Language">
             <a
-              href={toLocalePath('en', Astro.url.pathname)}
+              href={enHref}
               aria-current={lang === 'en' ? 'true' : undefined}
               data-lang="en"
               >EN</a
             >
             <a
-              href={toLocalePath('ru', Astro.url.pathname)}
+              href={ruHref}
               aria-current={lang === 'ru' ? 'true' : undefined}
               data-lang="ru"
               >RU</a

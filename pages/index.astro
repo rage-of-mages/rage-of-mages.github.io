@@ -11,14 +11,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="0; url=/en/" />
+    <meta http-equiv="refresh" content="0; url=./en/" />
     <title>Redirecting…</title>
     <script is:inline>
       (function () {
+        var base = (function () {
+          var path = window.location.pathname || '/';
+          // If this site is served from a subpath (GitHub Pages project site),
+          // keep that prefix. We infer base from the current /index.html location.
+          // Example: /pages/ -> base '/pages'
+          if (path.endsWith('/index.html')) path = path.slice(0, -'/index.html'.length);
+          if (!path.endsWith('/')) path += '/';
+          return path === '/' ? '' : path.replace(/\/$/, '');
+        })();
         try {
           var saved = localStorage.getItem('rom_lang');
           if (saved === 'ru' || saved === 'en') {
-            window.location.replace('/' + saved + '/');
+            window.location.replace(base + '/' + saved + '/');
             return;
           }
 
@@ -33,9 +42,9 @@
               break;
             }
           }
-          window.location.replace(isRu ? '/ru/' : '/en/');
+          window.location.replace(base + (isRu ? '/ru/' : '/en/'));
         } catch (e) {
-          window.location.replace('/en/');
+          window.location.replace(base + '/en/');
         }
       })();
     </script>
@@ -44,7 +53,7 @@
     <noscript>
       <p>
         JavaScript is disabled. Choose your language:
-        <a href="/en/">English</a> · <a href="/ru/">Русский</a>
+        <a href="./en/">English</a> · <a href="./ru/">Русский</a>
       </p>
     </noscript>
   </body>
