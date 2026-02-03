@@ -1,12 +1,35 @@
 ---
 import { getLocaleFromPathname, toLocalePath } from '../lib/i18n';
 
-const { title = 'Rage of Mages', lang: langProp } = Astro.props;
+const { title, lang: langProp } = Astro.props;
 const lang = (langProp ?? getLocaleFromPathname(Astro.url.pathname) ?? 'en');
+const brand = lang === 'ru' ? 'Аллоды' : 'Rage of Mages';
+const pageTitle = title ?? brand;
 // IMPORTANT: Use relative URLs so this works both locally (/) and on GitHub Pages project sites (/pages/)
 const homeHref = lang === 'ru' ? '../ru/' : '../en/';
 const enHref = '../en/';
 const ruHref = '../ru/';
+
+const mysteryHref = './mystery/';
+const necromancerHref = './necromancer/';
+const newsHref = './news';
+const blogHref = './blog';
+const aboutHref = './about';
+const roadmapHref = './roadmap';
+const faqHref = './faq';
+const contactHref = './contact';
+
+const labels = {
+  home: lang === 'ru' ? 'Главная' : 'Home',
+  mystery: lang === 'ru' ? 'Печать Тайны' : 'Rage of Mages',
+  necromancer: lang === 'ru' ? 'Повелитель Душ' : 'Necromancer',
+  news: lang === 'ru' ? 'Новости' : 'News',
+  blog: lang === 'ru' ? 'Блог' : 'Blog',
+  about: lang === 'ru' ? 'О проекте' : 'About',
+  roadmap: lang === 'ru' ? 'План' : 'Roadmap',
+  faq: 'FAQ',
+  contact: lang === 'ru' ? 'Контакты' : 'Contact',
+};
 ---
 <!doctype html>
 <html lang={lang}>
@@ -14,7 +37,7 @@ const ruHref = '../ru/';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <style>
       :root {
         --bg: #0b1020;
@@ -123,10 +146,18 @@ const ruHref = '../ru/';
       <header>
         <div class="brand">
           <div class="logo" aria-hidden="true"></div>
-          <span>Rage of Mages</span>
+          <span>{brand}</span>
         </div>
         <nav>
-          <a href={homeHref}>{lang === 'ru' ? 'Главная' : 'Home'}</a>
+          <a href={homeHref}>{labels.home}</a>
+          <a href={mysteryHref}>{labels.mystery}</a>
+          <a href={necromancerHref}>{labels.necromancer}</a>
+          <a href={newsHref}>{labels.news}</a>
+          <a href={blogHref}>{labels.blog}</a>
+          <a href={aboutHref}>{labels.about}</a>
+          <a href={roadmapHref}>{labels.roadmap}</a>
+          <a href={faqHref}>{labels.faq}</a>
+          <a href={contactHref}>{labels.contact}</a>
           <span class="lang-switch" role="group" aria-label="Language">
             <a
               href={enHref}
