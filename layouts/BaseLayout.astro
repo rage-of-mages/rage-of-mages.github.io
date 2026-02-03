@@ -5,19 +5,22 @@ const { title, lang: langProp } = Astro.props;
 const lang = (langProp ?? getLocaleFromPathname(Astro.url.pathname) ?? 'en');
 const brand = lang === 'ru' ? 'Аллоды' : 'Rage of Mages';
 const pageTitle = title ?? brand;
-// IMPORTANT: Use relative URLs so this works both locally (/) and on GitHub Pages project sites (/pages/)
-const homeHref = lang === 'ru' ? '../ru/' : '../en/';
-const enHref = '../en/';
-const ruHref = '../ru/';
+const base = Astro.base ?? '';
+const withBase = (path: string) => `${base}${path}`;
 
-const mysteryHref = './mystery/';
-const necromancerHref = './necromancer/';
-const newsHref = './news';
-const blogHref = './blog';
-const aboutHref = './about';
-const roadmapHref = './roadmap';
-const faqHref = './faq';
-const contactHref = './contact';
+const homeHref = withBase(`/${lang}/`);
+
+const enHref = withBase('/en/');
+const ruHref = withBase('/ru/');
+
+const mysteryHref = withBase(`/${lang}/mystery/`);
+const necromancerHref = withBase(`/${lang}/necromancer/`);
+const newsHref = withBase(`/${lang}/news/`);
+const blogHref = withBase(`/${lang}/blog/`);
+const aboutHref = withBase(`/${lang}/about/`);
+const roadmapHref = withBase(`/${lang}/roadmap/`);
+const faqHref = withBase(`/${lang}/faq/`);
+const contactHref = withBase(`/${lang}/contact/`);
 
 const labels = {
   home: lang === 'ru' ? 'Главная' : 'Home',
