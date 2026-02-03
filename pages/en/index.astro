@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Rage of Mages — Pages';
+const lang = 'en';
+---
+
+<BaseLayout title={title} lang={lang}>
+  <h1>Rage of Mages</h1>
+  <p>
+    This is the default Astro site scaffold for the <code>rage-of-mages/pages</code> repository.
+    Edit <code>pages/en/index.astro</code> to get started.
+  </p>
+
+  <h2>Next steps</h2>
+  <ul>
+    <li>Add more pages under <code>pages/en</code> and <code>pages/ru</code>.</li>
+    <li>Put static files (images, icons) into <code>public/</code>.</li>
+    <li>
+      Push to <code>master</code> and GitHub Actions will build + deploy to GitHub Pages via
+      <code>.github/workflows/astro.yml</code>.
+    </li>
+  </ul>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://docs.astro.build/" target="_blank" rel="noreferrer">Astro Docs</a></li>
+    <li>
+      <a href="https://docs.github.com/en/pages" target="_blank" rel="noreferrer">GitHub Pages Docs</a>
+    </li>
+  </ul>
+</BaseLayout>

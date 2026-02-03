@@ -1,0 +1,172 @@
+---
+import { getLocaleFromPathname, toLocalePath } from '../lib/i18n';
+
+const { title = 'Rage of Mages', lang: langProp } = Astro.props;
+const lang = (langProp ?? getLocaleFromPathname(Astro.url.pathname) ?? 'en');
+const homeHref = `/${lang}/`;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>{title}</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: #111a33;
+        --text: #e9eefc;
+        --muted: #b6c2f5;
+        --accent: #7cafff;
+        --border: rgba(233, 238, 252, 0.12);
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f7f8ff;
+          --card: #ffffff;
+          --text: #1a2340;
+          --muted: #4a5a8f;
+          --accent: #1f66ff;
+          --border: rgba(26, 35, 64, 0.12);
+        }
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+          Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(1200px 700px at 10% 10%, rgba(124, 175, 255, 0.16), transparent 60%),
+          radial-gradient(900px 600px at 90% 30%, rgba(180, 124, 255, 0.12), transparent 60%),
+          var(--bg);
+        color: var(--text);
+      }
+      a {
+        color: var(--accent);
+      }
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 32px 18px 64px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 0 24px;
+      }
+      header .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+      }
+      header .brand .logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(124, 175, 255, 0.7), rgba(180, 124, 255, 0.65));
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      }
+      nav {
+        display: flex;
+        gap: 14px;
+        font-size: 14px;
+      }
+      .lang-switch {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .lang-switch a {
+        padding: 6px 10px;
+        text-decoration: none;
+        opacity: 0.9;
+      }
+      .lang-switch a[aria-current='true'] {
+        background: color-mix(in srgb, var(--accent) 16%, transparent);
+        opacity: 1;
+      }
+      nav a {
+        text-decoration: none;
+        opacity: 0.9;
+      }
+      nav a:hover {
+        opacity: 1;
+        text-decoration: underline;
+      }
+      main {
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--card) 88%, transparent);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+      }
+      footer {
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+          "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <span>Rage of Mages</span>
+        </div>
+        <nav>
+          <a href={homeHref}>{lang === 'ru' ? 'Главная' : 'Home'}</a>
+          <span class="lang-switch" role="group" aria-label="Language">
+            <a
+              href={toLocalePath('en', Astro.url.pathname)}
+              aria-current={lang === 'en' ? 'true' : undefined}
+              data-lang="en"
+              >EN</a
+            >
+            <a
+              href={toLocalePath('ru', Astro.url.pathname)}
+              aria-current={lang === 'ru' ? 'true' : undefined}
+              data-lang="ru"
+              >RU</a
+            >
+          </span>
+          <a href="https://github.com/rage-of-mages/pages" target="_blank" rel="noreferrer">GitHub</a>
+        </nav>
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer>
+        <div>
+          {lang === 'ru' ? 'Сайт на' : 'Built with'}
+          <a href="https://astro.build" target="_blank" rel="noreferrer">Astro</a>.
+        </div>
+      </footer>
+    </div>
+
+    <script is:inline>
+      (function () {
+        try {
+          var links = document.querySelectorAll('a[data-lang]');
+          for (var i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function (e) {
+              try {
+                localStorage.setItem('rom_lang', this.getAttribute('data-lang'));
+              } catch (_) {}
+            });
+          }
+        } catch (_) {}
+      })();
+    </script>
+  </body>
+</html>

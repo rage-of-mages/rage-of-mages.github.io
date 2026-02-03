@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Rage of Mages — Страницы';
+const lang = 'ru';
+---
+
+<BaseLayout title={title} lang={lang}>
+  <h1>Rage of Mages</h1>
+  <p>
+    Это стартовый сайт на Astro для репозитория <code>rage-of-mages/pages</code>.
+    Редактируйте <code>pages/ru/index.astro</code>, чтобы начать.
+  </p>
+
+  <h2>Следующие шаги</h2>
+  <ul>
+    <li>Добавляйте страницы в <code>pages/ru</code> и <code>pages/en</code>.</li>
+    <li>Статические файлы (картинки, иконки) кладите в <code>public/</code>.</li>
+    <li>
+      Пушьте в <code>master</code> — GitHub Actions соберёт и задеплоит сайт в GitHub Pages через
+      <code>.github/workflows/astro.yml</code>.
+    </li>
+  </ul>
+
+  <h2>Ссылки</h2>
+  <ul>
+    <li><a href="https://docs.astro.build/" target="_blank" rel="noreferrer">Документация Astro</a></li>
+    <li>
+      <a href="https://docs.github.com/en/pages" target="_blank" rel="noreferrer">Документация GitHub Pages</a>
+    </li>
+  </ul>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+// Root is a lightweight language router.
+// For static hosting (GitHub Pages), we do a tiny inline redirect based on:
+// 1) saved preference (localStorage)
+// 2) browser language
+// This avoids maintaining content at / and keeps canonical pages under /en and /ru.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="0; url=/en/" />
+    <title>Redirecting…</title>
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('rom_lang');
+          if (saved === 'ru' || saved === 'en') {
+            window.location.replace('/' + saved + '/');
+            return;
+          }
+
+          var langs = (navigator.languages && navigator.languages.length)
+            ? navigator.languages
+            : [navigator.language || navigator.userLanguage || 'en'];
+          var isRu = false;
+          for (var i = 0; i < langs.length; i++) {
+            var l = String(langs[i] || '').toLowerCase();
+            if (l === 'ru' || l.startsWith('ru-')) {
+              isRu = true;
+              break;
+            }
+          }
+          window.location.replace(isRu ? '/ru/' : '/en/');
+        } catch (e) {
+          window.location.replace('/en/');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>
+        JavaScript is disabled. Choose your language:
+        <a href="/en/">English</a> · <a href="/ru/">Русский</a>
+      </p>
+    </noscript>
+  </body>
+</html>
